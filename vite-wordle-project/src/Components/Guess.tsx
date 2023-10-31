@@ -19,10 +19,9 @@ function Guess ({word, guess}: Props) {
         const backgroundColor = 
         (guess.length !== 0) ? 
         word[index] === guess[index] ? COLOR_STATUS.Correct : word.includes(guess[index]) ? COLOR_STATUS.Include : COLOR_STATUS.Miss : COLOR_STATUS.NotGuessed
-        
 
       return (
-        <div className={`flex items-center justify-center border w-12 h-12 text-white font-bold text-3xl ${backgroundColor}`}>{guess.toUpperCase()[index]}</div>
+        <div key={index} className={`flex items-center justify-center border w-12 h-12 text-white font-bold text-3xl ${backgroundColor}`}>{guess.toUpperCase()[index]}</div>
       )
     })}
     </div>
