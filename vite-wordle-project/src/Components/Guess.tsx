@@ -13,12 +13,14 @@ enum COLOR_STATUS {
 }
 
 function Guess ({word, guess}: Props) {
+  const MAX_LETTERS = 5
+
   const isInputEmpty = (guess.length === 0)
-  const isInputComplete = (guess.length === 5)
+  const isInputComplete = (guess.length === MAX_LETTERS)
   
   return(
     <div className="flex gap-2 mb-2">
-      {Array(5).fill(0).map((_, index) => {
+      {Array(MAX_LETTERS).fill(0).map((_, index) => {
         const backgroundColor = 
         (!isInputEmpty) ? 
         (!isInputComplete) ? (guess[index] !== undefined) ? COLOR_STATUS.Typing : COLOR_STATUS.NotGuessed:
