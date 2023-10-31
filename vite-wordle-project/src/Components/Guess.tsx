@@ -2,6 +2,7 @@
 interface Props {
   word: string,
   guess: string,
+  isGuessed: boolean;
 }
 
 enum COLOR_STATUS {
@@ -12,7 +13,7 @@ enum COLOR_STATUS {
   Typing = 'bg-black border-[#565758]'
 }
 
-function Guess ({word, guess}: Props) {
+function Guess ({word, guess, isGuessed}: Props) {
   const MAX_LETTERS = 5
 
   const isInputEmpty = (guess.length === 0)
@@ -22,6 +23,7 @@ function Guess ({word, guess}: Props) {
     <div className="flex gap-2 mb-2">
       {Array(MAX_LETTERS).fill(0).map((_, index) => {
         const backgroundColor = 
+        isGuessed &&
         (!isInputEmpty) ? 
         (!isInputComplete) ? (guess[index] !== undefined) ? COLOR_STATUS.Typing : COLOR_STATUS.NotGuessed:
         word[index] === guess[index] ? COLOR_STATUS.Correct : word.includes(guess[index]) ? COLOR_STATUS.Include : COLOR_STATUS.Miss : COLOR_STATUS.NotGuessed

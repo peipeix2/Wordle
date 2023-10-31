@@ -4,7 +4,7 @@ import Guess from './Components/Guess'
 import "./index.css";
 
 function App() {
-  const [guessRound, setGuessRound] = useState<string[]>(['guess', 'glory', 'grail', 'ed', '', ''])
+  const [guessRound, setGuessRound] = useState<string[]>(['', '', '', '', '', ''])
   const [currentRound, setCurrentRound] = useState<number>(0)
   const MAX_GUESS = 6
   const answer = 'grail'
@@ -25,7 +25,6 @@ function App() {
   }
 
   const handleKeyPress = (e: any) => {
-    // Phase-3待修改：現在key-in出5個字就會出現答案，要按Enter才會換行，還在思考解決辦法
     if (e.key === 'Enter') {
       return submitGuess()
     }
@@ -53,7 +52,7 @@ function App() {
           <h1 className='text-5xl mb-10 font-bold text-slate-500'>Wordle</h1>
           {Array(MAX_GUESS).fill(0).map((_, index) => {
             return(
-              <Guess key={index} word={answer} guess={guessRound[index]} />
+              <Guess key={index} word={answer} guess={guessRound[index]} isGuessed={index < currentRound} />
             )
           })}
         </div>
