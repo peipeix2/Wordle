@@ -1,4 +1,4 @@
-import React from "react";
+
 
 interface Props {
   word: string,
@@ -6,9 +6,8 @@ interface Props {
   isGuessed: boolean
 }
 
-function Guess ({word, guess, isGuessed}: Props) {
-   
-
+function Guess ({guess}: Props) {
+  
   return(
     <div className="flex gap-2 mb-2">
       {Array(5).fill(0).map((_, index) => {
