@@ -4,7 +4,7 @@ import Guess from './Components/Guess'
 import "./index.css";
 
 function App() {
-  const [guessRound, setGuessRound] = useState<string[]>(['', '', '', '', '', ''])
+  const [guessRound, setGuessRound] = useState<string[]>(['guess', 'glory', 'grail', 'ed', '', ''])
   const [currentRound, setCurrentRound] = useState<number>(0)
   const MAX_GUESS = 6
   const answer = 'grail'
