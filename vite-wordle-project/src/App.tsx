@@ -12,6 +12,8 @@ function App() {
   useEffect(() => {
       window.addEventListener('keydown', handleKeyPress)
 
+      handleLost(currentRound, MAX_GUESS)
+
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
     }
@@ -24,8 +26,24 @@ function App() {
     }
   }
 
+  const handleWin = (currentRound: number) => {
+    if(currentRound < MAX_GUESS && guessRound[currentRound] === answer) {
+      console.log('Congratulations! You win!')
+      setCurrentRound(6)
+    }
+  }
+
+  const handleLost = (currentRound: number, MAX_GUESS: number) => {
+    if (currentRound === MAX_GUESS && !guessRound.includes(answer)) {
+      console.log('Oops! Better luck tomorrow.')
+      setGuessRound(['', '', '', '', '', ''])
+      setCurrentRound(0)
+    }
+  }
+
   const handleKeyPress = (e: any) => {
     if (e.key === 'Enter') {
+      handleWin(currentRound)
       return submitGuess()
     }
 
@@ -46,6 +64,7 @@ function App() {
     }
   }
 
+  console.log(currentRound)
   return (
     <div className="flex w-full h-screen items-center bg-slate-800">
        <div className='flex flex-col m-auto items-center'>
