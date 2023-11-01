@@ -64,7 +64,6 @@ function App() {
     }
   }
 
-  console.log(currentRound)
   return (
     <div className="flex w-full h-screen items-center bg-slate-800">
        <div className='flex flex-col m-auto items-center'>
