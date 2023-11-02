@@ -1,8 +1,15 @@
+import { computeGuess } from "../Utils/word-utils";
 
 interface Props {
   word: string,
   guess: string,
   isGuessed: boolean;
+}
+
+enum MATCH_STATUS {
+  Correct = 'Correct',
+  Include = 'Include',
+  Miss = 'Miss'
 }
 
 enum COLOR_STATUS {
@@ -17,17 +24,28 @@ function Guess ({word, guess, isGuessed}: Props) {
   const MAX_LETTERS = 5
 
   const isInputEmpty = (guess.length === 0)
-  const isInputComplete = (guess.length === MAX_LETTERS)
+
+  const computeStyle = (index:number) => {
+      const result = computeGuess(guess, word)
+      if (result[index] === MATCH_STATUS.Correct) {
+        return COLOR_STATUS.Correct
+      }
+      if (result[index] === MATCH_STATUS.Include) {
+        return COLOR_STATUS.Include
+      }
+      if (result[index] === MATCH_STATUS.Miss) {
+        return COLOR_STATUS.Miss
+      }  
+  }
+
   
   return(
     <div className="flex gap-2 mb-2">
       {Array(MAX_LETTERS).fill(0).map((_, index) => {
         const backgroundColor = 
-        isGuessed &&
-        (!isInputEmpty) ? 
-        (!isInputComplete) ? (guess[index] !== undefined) ? COLOR_STATUS.Typing : COLOR_STATUS.NotGuessed:
-        word[index] === guess[index] ? COLOR_STATUS.Correct : word.includes(guess[index]) ? COLOR_STATUS.Include : COLOR_STATUS.Miss : COLOR_STATUS.NotGuessed
-
+        isGuessed ?
+        (!isInputEmpty) ? computeStyle(index) : COLOR_STATUS.NotGuessed :
+        (guess[index] !== undefined) ? COLOR_STATUS.Typing : COLOR_STATUS.NotGuessed
       return (
         <div key={index} className={`flex items-center justify-center border w-12 h-12 text-white font-bold text-3xl ${backgroundColor}`}>{guess.toUpperCase()[index]}</div>
       )
