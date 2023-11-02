@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react';
 import './App.css'
 import Guess from './Components/Guess'
 import "./index.css";
+import { getRandomWord } from './Utils/word-utils';
+import wordBank from './word-bank.json'
 
 function App() {
   const [guessRound, setGuessRound] = useState<string[]>(['', '', '', '', '', ''])
   const [currentRound, setCurrentRound] = useState<number>(0)
+  const [answer, setAnswer] = useState(getRandomWord())
+
   const [isComplete, setIsComplete] = useState(false)
   const [isEmpty, setIsEmpty] = useState(true)
+
+  const [hasGivenUp, setHasGivenUp] = useState(false)
   const MAX_GUESS = 6
-  const answer = 'grail'
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
@@ -17,7 +22,7 @@ function App() {
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
     }
-  }, [isComplete, isEmpty])
+  }, [isComplete, isEmpty, hasGivenUp])
 
   useEffect(() => {
     const currentRoundGuess = guessRound[currentRound]
@@ -35,15 +40,22 @@ function App() {
   const handleReset = () => {
       setGuessRound(['', '', '', '', '', ''])
       setCurrentRound(0)
+      setAnswer(getRandomWord)
+      setHasGivenUp(false)
+  }
+
+  const handleGivenUp = () => {
+      setHasGivenUp(true)
+      setCurrentRound(prev => prev + 1)
   }
 
   const handleKeyPress = (e: any) => {
-    if(isWin || isLost) {
+    if(isWin || isLost || hasGivenUp) {
       return
     }
 
     if (e.key === 'Enter') {
-      if(isComplete) {
+      if(isComplete && wordBank.includes(guessRound[currentRound])) {
         setCurrentRound(prev => prev + 1)
         return setIsComplete(false)
       }
@@ -89,9 +101,11 @@ function App() {
               <Guess key={index} word={answer} guess={guessRound[index]} isGuessed={index < currentRound} />
             )
           })}
+          {hasGivenUp && <h1>{answer}</h1>}
+          {!hasGivenUp && <button className=' text-slate-500 mt-2' onClick={handleGivenUp}>Show me the answer</button>}
           {isWin && <h1 className=' text-indigo-300 mt-5'>Congratulations! You won!</h1>}
           {isLost && <h1 className=' text-gray-400 mt-5'>Oops! Better luck tomorrow!</h1>}
-          {(isWin || isLost) && <button className=' text-slate-500 mt-2' onClick={handleReset}>Play Again</button>}
+          {(isWin || isLost || hasGivenUp) && <button className=' text-slate-500 mt-2' onClick={handleReset}>Play Again</button>}
       </div>
         
     </div>

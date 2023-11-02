@@ -1,3 +1,5 @@
+import wordBank from '../word-bank.json'
+
 const MATCH_STATUS = {
   CORRECT: 'Correct',
   INCLUDE: 'Include',
@@ -63,3 +65,11 @@ export function computeGuess(guess:string, answer:string) {
   })
   return result
 }
+
+export function getRandomWord() {
+  const randomIndex = Math.floor(Math.random() * wordBank.length)
+  console.log(randomIndex)
+  return wordBank[randomIndex]
+}
+
+export const answer = getRandomWord()
