@@ -34,8 +34,8 @@ function App() {
   }, [guessRound])
 
 
-  const isWin = (guessRound[currentRound - 1] === answer)
-  const isLost = (currentRound === MAX_GUESS) 
+  const isWin = guessRound[currentRound - 1] === answer
+  const isLost = currentRound === MAX_GUESS
 
   const handleReset = () => {
       setGuessRound(['', '', '', '', '', ''])

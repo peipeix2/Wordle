@@ -1,15 +1,9 @@
-import { computeGuess } from "../Utils/word-utils";
+import { computeGuess, MATCH_STATUS } from "../Utils/word-utils";
 
 interface Props {
   word: string,
   guess: string,
   isGuessed: boolean;
-}
-
-enum MATCH_STATUS {
-  Correct = 'Correct',
-  Include = 'Include',
-  Miss = 'Miss'
 }
 
 enum COLOR_STATUS {
@@ -27,13 +21,13 @@ function Guess ({word, guess, isGuessed}: Props) {
 
   const computeStyle = (index:number) => {
       const result = computeGuess(guess, word)
-      if (result[index] === MATCH_STATUS.Correct) {
+      if (result[index] === MATCH_STATUS.CORRECT) {
         return COLOR_STATUS.Correct
       }
-      if (result[index] === MATCH_STATUS.Include) {
+      if (result[index] === MATCH_STATUS.INCLUDE) {
         return COLOR_STATUS.Include
       }
-      if (result[index] === MATCH_STATUS.Miss) {
+      if (result[index] === MATCH_STATUS.MISS) {
         return COLOR_STATUS.Miss
       }  
   }
